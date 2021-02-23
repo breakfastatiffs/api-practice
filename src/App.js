@@ -6,13 +6,14 @@ export default class App extends React.Component {
     super(props)
     this.state = {
       apod: [],
+      inputValue: ''
     }
   }
 
   //GET
   componentDidMount(){
     this.setState({ loading: true })
-    fetch('https://api.nasa.gov/planetary/apod?api_key=xmVLeY7ByIptpRo2BL7kIKx7GVmsxK23obFsTRiS')
+    fetch(`https://api.nasa.gov/planetary/apod?api_key=xmVLeY7ByIptpRo2BL7kIKx7GVmsxK23obFsTRiS`)
     .then(res => res.json())
     .then(data => {
 
@@ -24,14 +25,26 @@ export default class App extends React.Component {
         })
     })
     .catch(err => console.log(err))
+  }
 
+  updateInput = (e) => {
+    e.preventDefault()
+    this.setState({inputValue: e.target['search-field'].value}, this.componentDidMount)
   }
 
   render(){
     return (
       <main className='App'>
-        <p>Hi</p>
-        <h1>{this.state.apod.date}</h1>
+
+        <form onSubmit={this.updateInput}>
+          <label>Find a specific date:</label>
+          <input id='search-field' type='text' />
+          <button>Search</button>
+        </form>
+
+        <h1>{this.state.apod.title}</h1>
+        <p>{this.state.apod.date}</p>
+        <p>{this.state.apod.explanation}</p>
         {/* <Item apod={this.state.apod}/> */}
       </main>
     );
