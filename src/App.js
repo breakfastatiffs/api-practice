@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      loading: false,
+      apod: {},
+    }
+  }
+
+  //GET
+  componentDidMount(){
+    this.setState({ loading: true })
+    fetch('https://api.nasa.gov/planetary/apod?api_key=xmVLeY7ByIptpRo2BL7kIKx7GVmsxK23obFsTRiS')
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      console.log(data.date)
+
+        // this.setState({
+        //   loading: false,
+        //   apod: data.results
+        // })
+    })
+    .catch(err => console.log(err))
+
+  }
+
+  render(){
+    return (
+      <main className='App'>
+        <p>Hi</p>
+      </main>
+    );
+  }
 }
-
-export default App;
